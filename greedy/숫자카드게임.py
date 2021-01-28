@@ -7,6 +7,7 @@
 # 7 3 1 8
 # 3 3 3 4
 
+
 row, col = list(map(int, input().split()))
 data = []
 for _ in range(row):
