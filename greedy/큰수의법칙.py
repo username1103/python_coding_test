@@ -1,6 +1,8 @@
 # chapter3 greedy 3-1
 # 5 8 3
 # 2 4 5 4 6
+
+
 n, m, k = list(map(int, input().split()))
 data = sorted(list(map(int, input().split())))
 
