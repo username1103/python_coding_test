@@ -5,6 +5,7 @@ n, k = list(map(int, input().split()))
 cnt = 0
 
 while True:
+
     temp = (n // k) * k
     cnt += (n - temp)
     n = temp

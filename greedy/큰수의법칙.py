@@ -11,10 +11,13 @@ temp = 0
 cnt = 0
 
 while temp < m:
+
     temp += 1
+
     if cnt == k:
         result += data[n - 2]
         cnt = 0
+
     else:
         result += data[n - 1]
         cnt += 1
