@@ -4,7 +4,7 @@ n = list(map(int, input()))
 
 result = 0
 for num in n:
-    if result == 0 or num == 0:
+    if result <= 1 or num <= 1:
         result += num
     else:
         result *= num

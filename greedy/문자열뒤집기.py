@@ -1,28 +1,20 @@
 # 0001100
 
-s = list(map(int, input()))
+data = input()
 
-cnt = 0
-end = 0
+cnt0 = 0
+cnt1 = 0
 
-if s[0] == s[-1]:
-    main = s[0]
-    while True:
-        try:
-            start = s.index((main+1) % 2, end)
-            end = s.index(main, start + 1)
-            cnt += 1
-        except:
-            break
+if data[0] == '1':
+    cnt0 += 1
 else:
-    main = s[-1]
-    while True:
-        try:
-            start = s.index((main+1) % 2, end)
-            end = s.index(main, start + 1)
-            cnt += 1
-        except:
-            break
+    cnt1 += 1
 
+for i in range(len(data) - 1):
+    if data[i] != data[i + 1]:
+        if data[i + 1] == '1':
+            cnt0 += 1
+        else:
+            cnt1 += 1
 
-print(cnt)
+print(min(cnt0, cnt1))
