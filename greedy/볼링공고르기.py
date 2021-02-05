@@ -14,7 +14,7 @@ for i in ball:
 
 cnt = 0
 for i in range(1, m + 1):
-    n -= array[i]  # 무게가 ㅑ인 볼링공 개수 제외 => 중복도 알아서 제거 됨
+    n -= array[i]  # 무게가 i인 볼링공 개수 제외 => 중복도 알아서 제거 됨
     cnt += array[i] * n  # 무게가 i인 볼링공 고르고 나머지 볼링공을 고르는 경우의 수
 
 print(cnt)
