@@ -1,9 +1,11 @@
 def rotate90(matrix):
     cntRow = len(matrix)
     cntCol = len(matrix[0])
-    # 초기화
+    # 변환될 메트릭스 크기 생성
     result = [[0] * cntRow for _ in range(cntCol)]
 
+    # 변환전 데이터의 col값은 변환후 데이터의 row값과 같음
+    # 변환전 데이터의 row값은 변환 후 데이터의 끝에서 row값만 큼 뺀 col값에 위치
     for row in range(cntRow):
         for col in range(cntCol):
             result[col][cntRow - 1 - row] = matrix[row][col]
