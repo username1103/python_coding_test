@@ -71,6 +71,7 @@ n, m = map(int, input().split())
 house = []
 chicken = []
 
+# 치킨집과 집에 위치 추가
 for i in range(n):
     a = list(map(int, input().split()))
     for j in range(len(a)):
@@ -79,18 +80,23 @@ for i in range(n):
         elif a[j] == 2:
             chicken.append([i+1, j+1])
 
-
+# 치킨집에서 m개의 치킨집만 선택하는 모든 경우를 얻어옴
 chooselists = list(combinations(chicken, m))
 min_value = 100 * len(house)
+
+# 해당 선택 리스트들 마다
 for chooselist in chooselists:
     temp = 0
+    # 각 집들의 최소 치킨 거리 계산
     for home in house:
         home[2] = 100
         for chick in chooselist:
             home[2] = min(home[2], abs(home[0] - chick[0]) +
                           abs(home[1] - chick[1]))
+        # 도시의 최소 치킨 거리 계산
         temp += home[2]
 
+    # 더 작은값을 남김
     min_value = min(min_value, temp)
 
 print(min_value)

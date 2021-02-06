@@ -72,6 +72,7 @@ def solution(key, lock):
             key = rotate90(key)
         for i in range(len(big_lock) - key_length + 1):
             for j in range(len(big_lock) - key_length + 1):
+                # big_lock 의 원본 내용이 변경되지 않게 하기 위해서
                 temp = copy.deepcopy(big_lock)
                 answer = check(temp, key, lock, i, j)
                 if answer == True:

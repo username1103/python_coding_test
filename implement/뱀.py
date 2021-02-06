@@ -62,6 +62,8 @@
 # 13 L
 from collections import deque
 
+# 방향 전환
+
 
 def turn(cd, dirction):
     if dirction == 'D':
@@ -74,38 +76,64 @@ def turn(cd, dirction):
 n = int(input())
 k = int(input())
 
+# 맵 초기화
 board = [[0]*n for _ in range(n)]
+
+# 사과 위치 초기화
 for _ in range(k):
     row, col = map(int, input().split())
     board[row - 1][col - 1] = 1
 
+
+# 방향 전환 정보 입력받기
 l = int(input())
+# 방향 전환 정보를 priority queue에 담아 시간에 따라 오름차순 정렬
 direction = deque()
 for _ in range(l):
     time, d = input().split()
     direction.append((int(time), d))
 
+# 북 동 남 서에 따른 각각 전진시 변화량
 dx = [0, 1, 0, -1]
 dy = [-1, 0, 1, 0]
+# 현재 방향
 cd = 1
+# 뱀의 위치를 q에 담음
 q = deque()
 q.append((0, 0))
+
+# 맵에 현재 위치 표시
 board[0][0] = 2
+
+# 시간
 time = 0
 while True:
+    # 다음 위치 찾기
     ny = q[-1][0] + dy[cd]
     nx = q[-1][1] + dx[cd]
+
+    # 맵을 벗어나거나 자기 자신을 만난다면 죽음
     if nx >= n or ny >= n or nx < 0 or ny < 0 or board[ny][nx] == 2:
         time += 1
         break
+
+    # 사과를 먹은게 아니라면 가장 오래된 뱀의 위치를 제거
     if board[ny][nx] != 1:
         loc = q.popleft()
         board[loc[0]][loc[1]] = 0
+
+    # 뱀의 위치 추가
     q.append((ny, nx))
     board[ny][nx] = 2
+
+    # 시간 증가
     time += 1
+
+    # 시간이 방향전환정보에 데이터의 최근 정보와 일치한다면
     if len(direction) != 0 and time == direction[0][0]:
+        # 해당 정보를 없애고
         d = direction.popleft()[1]
+        # 방향전환
         cd = turn(cd, d)
 
 print(time)
