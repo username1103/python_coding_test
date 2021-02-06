@@ -35,11 +35,49 @@
 # [3, 5, 7]
 # 1
 
+# 아이디어
+# 원형을 일자로 펴서 2배로 나열 해줌
+from itertools import permutations
+
 n = 12
 weak = [1, 5, 6, 10]
 dist = [1, 2, 3, 4]
 
 
 def solution(n, weak, dist):
-    answer = 0
+    length = len(weak)
+    for i in range(length):
+        weak.append(weak[i] + n)
+    answer = len(dist) + 1
+
+    # 시작할 취약점 index(start) 선택
+    for start in range(length):
+        # 친구를 나열하는 방법 중 하나 씩 선택해서
+        for friends in list(permutations(dist, len(dist))):
+            count = 1
+            # 한명이 추가되고 그 친구가 시작하는 취약점에서 부터 갈 수 있는 위치 확인
+            position = weak[start] + friends[count - 1]
+
+            # 시작점부터 모든 취약점을 확인
+            for index in range(start, start + length):
+                # 한명이 도달할 수 있는 위치가 다른 취약점에 못미친다면
+                if position < weak[index]:
+                    # 인원 추가
+                    count += 1
+                    # 인원수가 넘어간다면 break
+                    if count > len(dist):
+                        break
+                    # 추가된 친구가 도달할 수 없던 취약점 부터 갈 수 있는 거리 체크
+                    position = weak[index] + friends[count - 1]
+
+            # 현재 최소 인원수와 방금 확인된 방식의 인원수를 비교해서 작은 값
+            answer = min(answer, count)
+
+    # 모든친구를 동원해도 불가능 하다면
+    if answer > len(dist):
+        return -1
+
     return answer
+
+
+print(solution(n, weak, dist))
