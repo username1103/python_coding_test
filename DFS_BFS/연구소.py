@@ -54,11 +54,13 @@
 from itertools import combinations
 import copy
 
+# 이동 방식 저장
 dx = [0, 1, 0, -1]
 dy = [-1, 0, 1, 0]
 
 
 def dfs(temp, y, x):
+    # 각 점에서부터 4가지 방향으로 dfs진행
     for i in range(4):
         ny = y + dy[i]
         nx = x + dx[i]
@@ -68,39 +70,45 @@ def dfs(temp, y, x):
                 dfs(temp, ny, nx)
 
 
+# 맵 크기정보 받기
 n, m = map(int, input().split())
-wall = []
 virus = []
 empty = []
 lab = []
+# 실험실 맵과 virus, 빈공간의 위치 저장
 for i in range(n):
     temp = list(map(int, input().split()))
     lab.append(temp)
     for j in range(m):
         if temp[j] == 0:
             empty.append([i, j])
-        elif temp[j] == 1:
-            wall.append([i, j])
-        else:
+        elif temp[j] == 2:
             virus.append([i, j])
 
-val = combinations(empty, 3)
+# 빈공간들중 벽을 설치할 빈공간 3개를 뽑는 경우들을 리스트로 저장
+empty_lists = combinations(empty, 3)
 
 safe_zone = 0
-for walls in val:
-    temp = copy.deepcopy(lab)
-    temp[walls[0][0]][walls[0][1]] = 1
-    temp[walls[1][0]][walls[1][1]] = 1
-    temp[walls[2][0]][walls[2][1]] = 1
+
+# 각각의 벽을 세우는 경우에 대해
+for walls in empty_lists:
+    temp = copy.deepcopy(lab)  # 원본 lab이 바뀌지 않게 하기 위해서 카피
+    # 벽을 세우고
+    for wall in walls:
+        temp[wall[0]][wall[1]] = 1
+
+    # 바이러스 전파
     for vi in virus:
         dfs(temp, vi[0], vi[1])
 
+    # 전체 맵에서 바이러스가 전파되지 않은 공간 체크
     temp2 = 0
     for i in range(n):
         for j in range(m):
             if temp[i][j] == 0:
                 temp2 += 1
 
+    # 가장 큰 안전공간으로 계속 갱신
     safe_zone = max(safe_zone, temp2)
 
 print(safe_zone)

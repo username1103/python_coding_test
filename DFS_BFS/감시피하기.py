@@ -71,12 +71,14 @@ def check(y, x, i):
     return False
 
 
+# 맵 사이즈
 n = int(input())
 
 data = []
 empty = []
 teachers = []
 
+# 맵과 선생, 빈공간의 좌표 입력받기
 for i in range(n):
     temp = input().split()
     data.append(temp)
@@ -86,16 +88,21 @@ for i in range(n):
         elif temp[j] == "T":
             teachers.append((i, j))
 
+# 각 빈공간중 장애물을 3개 설치할 위치를 정하는 모든 경우 얻음
 emptyList = list(combinations(empty, 3))
 
 result = "NO"
+# 각각의 모든 장애물 놓는 경우에 대해서
 for emptys in emptyList:
     canlook = False  # 초기화
 
+    # 장애물을 세움
     for space in emptys:
         data[space[0]][space[1]] = "O"
 
+    # 모든 선생들 좌표에대해서 탐색 시도
     for teacher in teachers:
+        # 4가지 방향으로 탐색 시도
         for i in range(4):
             if check(teacher[0], teacher[1], i):
                 canlook = True  # 봤음
@@ -103,10 +110,12 @@ for emptys in emptyList:
         if canlook == True:
             break
 
+    # 학생을 발견하지 못했다면
     if canlook == False:
         result = "YES"
         break
 
+    # 놨던 장애물 제거
     for space in emptys:
         data[space[0]][space[1]] = "X"
 

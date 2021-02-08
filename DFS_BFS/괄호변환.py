@@ -45,6 +45,7 @@
 p = "(()())()"
 
 
+# 올바른 괄호 문자열인지 체크
 def check(u):
     count = 0
     for i in u:
@@ -58,6 +59,7 @@ def check(u):
 
 
 def balanced_index(p):
+    # 괄호의 개수가 같아지는 지점 반환
     count = 0
     for i in range(len(p)):
         if p[i] == "(":
@@ -70,23 +72,32 @@ def balanced_index(p):
 
 def solution(p):
     answer = ""
-
+    # 빈문자열이라면 빈문자열 리턴
     if p == "":
         return answer
 
+    # 이미 올바른 괄호 문자열이라면 리턴
     if check(p):
         return p
 
+    # 처음부터 어디까지 균형잡힌 괄호 문자열이 되는지 인덱스 찾기
     index = balanced_index(p)
+    # u, v 로 분리
     u = p[:index + 1]
     v = p[index + 1:]
+
+    # u가 올바른 괄호 문자열 이라면 v에 대해 같은 과정을 수행해 추가
     if check(u):
         answer = u + solution(v)
-
+    # u가 올바른 괄호 문자열이 아니라면
     else:
+        # 4-1
         answer = "("
+        # 4-2
         answer += solution(v)
+        # 4-3
         answer += ")"
+        # 4-4
         u = list(u[1:-1])
         for i in range(len(u)):
             if u[i] == "(":
@@ -94,6 +105,7 @@ def solution(p):
             else:
                 u[i] = "("
 
+        # 4-5
         answer += "".join(u)
 
     return answer

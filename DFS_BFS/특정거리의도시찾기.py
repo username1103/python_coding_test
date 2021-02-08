@@ -50,34 +50,44 @@
 from collections import deque
 import sys
 
+# 입력받기
 n, m, k, x = map(int, sys.stdin.readline().rstrip().split())
 
 graph = [[] for _ in range(n + 1)]
 
+# 입력 받는 데이터 수가 많으므로 시간초과를 우려해서 sys.stdin.readline이용
+# 인접 리스트 방식으로 저장
 for _ in range(m):
     a, b = map(int, sys.stdin.readline().rstrip().split())
     graph[a].append(b)
 
 
 def bfs(x):
+    # 거리 정보를 저장하고 해당 노드를 지나갔는지 체크하기 위한 리스트
     result = [-1] * (n + 1)
     q = deque()
+    # 시작 점을 큐에 넣고 거리 정보 갱신
     q.append(x)
     result[x] = 0
     while q:
         now = q.popleft()
 
+        # 해당 노드와 연결된 모든 노드들에 대한 검사
         for connect in graph[now]:
+            # 만약 해당 노드를 방문하지 않았다면
             if result[connect] == -1:
+                # 거리를 갱신해주고 큐에 삽입
                 result[connect] = result[now] + 1
                 q.append(connect)
 
     return result
 
 
+# 시작 점에서 부터 bfs 수행
 result = bfs(x)
 check = False
 for i in range(1, len(result)):
+    # 거리가 k인 좌표가 있다면 출력
     if result[i] == k:
         print(i)
         check = True

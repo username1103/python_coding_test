@@ -31,20 +31,23 @@ input = sys.stdin.readline
 
 def process(y, x, index):
     global n, data, union
-    group = []
+    group = []  # 연합 데이터 저장
     q = deque()
-    summary = 0
-    cnt = 1
+    summary = 0  # 연합내 국가의 전체합 저장
+    cnt = 1  # 연합내 국가의 수
     q.append((y, x))
     group.append((y, x))
     summary += data[y][x]
     union[y][x] = index
     while q:
         y, x = q.popleft()
+        # 4가지 방향에 대해 수행
         for d in range(4):
             ny = y + dy[d]
             nx = x + dx[d]
+            # 벗어나지 않고 연합에 들어가지 않았다면
             if 0 <= nx < n and 0 <= ny < n and union[ny][nx] == -1:
+                # 해당 조건을 만족한다면
                 if l <= abs(data[y][x] - data[ny][nx]) <= r:
                     group.append((ny, nx))
                     cnt += 1
@@ -52,6 +55,7 @@ def process(y, x, index):
                     summary += data[ny][nx]
                     q.append((ny, nx))
 
+    # 연합내 국가수가 1이 아니라면 연합내 국가의 값을 조건에 맞게 바꿔줌
     if cnt != 1:
         for i, j in group:
             data[i][j] = summary // cnt
@@ -62,8 +66,10 @@ def process(y, x, index):
 dx = [0, 1, 0, -1]
 dy = [-1, 0, 1, 0]
 
+# 맵 크기와 조건 입력받기
 n, l, r = map(int, input().split())
 
+# 맵 입력받기
 data = []
 for _ in range(n):
     data.append(list(map(int, input().split())))
@@ -71,15 +77,21 @@ for _ in range(n):
 
 result = 0
 while True:
+    # 연합형성확인
     union = [[-1]*n for _ in range(n)]
     index = 0
     for i in range(n):
         for j in range(n):
+            # 연합이 형성되지 않았다면
             if union[i][j] == -1:
                 process(i, j, index)
                 index += 1
+
+    # 연합 개수가 n*n 즉 모든 나라가 자기자신만 연합인경우
     if index == n*n:
         break
+
+    # 횟수 증가
     result += 1
 
 print(result)

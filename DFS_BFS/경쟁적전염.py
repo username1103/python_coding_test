@@ -41,19 +41,24 @@ from collections import deque
 
 dx = [0, 1, 0, -1]
 dy = [-1, 0, 1, 0]
+
+# 시험관 크기와 바이러스 종류 수 입력받기
 n, k = map(int, input().split())
 
 m = []
 
 q = []
+# 시험관 맵을 입력받고 바이러스의 위치를 큐에 담아줌
 for i in range(n):
     m.append(list(map(int, input().split())))
     for j in range(n):
         if m[i][j] != 0:
-            q.append((m[i][j], i, j, 0))
+            q.append((m[i][j], i, j, 0))  # 바이러스의 값, y, x, time 을 저장
 
+# 바이러스 값에 따라 오름차순 정렬
 q.sort()
 
+# 타겟시간 타겟좌표 입력받기
 ts, ty, tx = map(int, input().split())
 
 
@@ -62,13 +67,16 @@ def bfs(q):
     while q:
         val, y, x, time = q.popleft()
 
+        # 시간이 타겟시간이 되면 종료
         if time == ts:
             break
 
+        # 4가지 방향으로 탐색진행
         for i in range(4):
             ny = y + dy[i]
             nx = x + dx[i]
 
+            # 시험관을 벗어나지 않고, 빈공간이라면 바이러스로 채우고 큐에 입력
             if ny >= 0 and nx >= 0 and ny < n and nx < n:
                 if m[ny][nx] == 0:
                     m[ny][nx] = val
@@ -76,6 +84,7 @@ def bfs(q):
 
 
 bfs(q)
+# 타겟 좌표 출력
 print(m[ty - 1][tx - 1])
 
 

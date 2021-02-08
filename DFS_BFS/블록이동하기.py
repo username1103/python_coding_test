@@ -49,11 +49,14 @@ board = [[0, 0, 0, 1, 1], [0, 0, 0, 1, 0], [
 
 
 def getNextPos(pos, board):
+    # 전체 이동가능 위치를 담을 리스트
     next_pos_list = []
+    # 현재 위치 받기
     pos = list(pos)
     pos1_y, pos1_x, pos2_y, pos2_x = pos[0][0], pos[0][1], pos[1][0], pos[1][1]
     dx = [0, 1, 0, -1]
     dy = [-1, 0, 1, 0]
+    # 단순히 상하좌우 움직임확인히여 리스트에 담기
     for i in range(4):
         next_pos1_y = pos1_y + dy[i]
         next_pos1_x = pos1_x + dx[i]
@@ -63,24 +66,30 @@ def getNextPos(pos, board):
             next_pos_list.append(
                 {(next_pos1_y, next_pos1_x), (next_pos2_y, next_pos2_x)})
 
+    # 가로로 로봇이 놓여있다면
     if pos1_y == pos2_y:
+        # 위아래에 빈공간을 체크해서 회전하는 경우 리스트에 추가
         for i in [-1, 1]:
             if board[pos1_y + i][pos1_x] == 0 and board[pos2_y + i][pos2_x] == 0:
                 next_pos_list.append({(pos1_y, pos1_x), (pos1_y+i, pos1_x)})
                 next_pos_list.append({(pos2_y, pos2_x), (pos2_y+i, pos2_x)})
 
+    # 세로로 로봇이 놓여있다면
     elif pos1_x == pos2_x:
+        # 왼쪽 오른쪽 빈공간을 체크해서 회전하는 경우 리스트에 추가
         for i in [-1, 1]:
             if board[pos1_y][pos1_x + i] == 0 and board[pos2_y][pos2_x + i] == 0:
                 next_pos_list.append({(pos1_y, pos1_x), (pos1_y, pos1_x + i)})
                 next_pos_list.append({(pos2_y, pos2_x), (pos2_y, pos2_x + i)})
 
+    # 전체 이동가능한 위치 리스트 반환
     return next_pos_list
 
 
 def solution(board):
     answer = 0
     n = len(board)
+    # 맵을 벽으로 둘러 쌈
     new_board = [[1] * (n + 2) for _ in range(n + 2)]
     for i in range(n):
         for j in range(n):
@@ -88,18 +97,24 @@ def solution(board):
 
     q = deque()
     visited = []
+    # set을 이용함으로써 {(1,1),(1,2)} 와 {(1,2),(1,1)}을 같게 인식하도록 함
+    # 큐에 넣고 방문처리
     pos = {(1, 1), (1, 2)}
     q.append((pos, 0))
     visited.append(pos)
     while q:
         pos, cost = q.popleft()
+        # 로봇이 최종위치에 도달하면
         if (n, n) in pos:
             return cost
 
+        # 로봇이 움직일 수 있는 모든 경우를 가져와서
         for next_pos in getNextPos(pos, new_board):
+            # 방문했는지 확인후 큐에 추가 및 방문처리
             if next_pos not in visited:
                 q.append((next_pos, cost + 1))
                 visited.append(next_pos)
+
     return answer
 
 
