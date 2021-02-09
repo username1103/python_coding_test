@@ -35,18 +35,23 @@ stages = [4, 4, 4, 4, 4]
 
 
 def solution(N, stages):
+    # 현재 멈춰있는 stages를 오름차순 정렬
     stages.sort()
     total = len(stages)
-    answer = []
-    num = 0
+    answer = []  # (실패율 , 단계) 정보 저장
+    num = 0  # 현재 진행중인 인덱스 & 현재까지 지난 사용자의 수
     for i in range(1, N + 1):
+        # stages의 전체를 이미 다돌았지만 아직 stage들이 남아있다면
         if total == num:
             answer.append((0, i))
             continue
+        # i단계의 멈춰있는 사용자를 찾음
         temp = stages.count(i)
+        # total - num = i단계 이상에 도달한 사용자
         answer.append((temp/(total-num), i))
-        num += temp
+        num += temp  # 체크한 곳까지 확대
 
+    # 정해진 방식으로 정렬
     answer.sort(key=lambda x: (-x[0], x[1]))
     answer = [i[1] for i in answer]
     return answer

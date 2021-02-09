@@ -23,15 +23,18 @@ import heapq
 n = int(input())
 
 num = []
+# 각 카드 숫자를 받아서 heapq에 넣어줌 => 최소힙이므로 오름차순 정렬의 효과
 for _ in range(n):
     heapq.heappush(num, int(input()))
 
-result = 0
+result = 0  # 전체 비교 수
 while len(num) != 1:
+    # 가장 적은 카드 묶음 2개를 꺼내어 합쳐줌
     one = heapq.heappop(num)
     two = heapq.heappop(num)
     sum_value = one + two
     result += sum_value
+    # 합친 카드 묶음을 다시 카드묶음리스트에 넣어줌
     heapq.heappush(num, sum_value)
 
 

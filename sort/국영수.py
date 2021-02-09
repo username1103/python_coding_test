@@ -15,14 +15,18 @@
 # 출력
 # 문제에 나와있는 정렬 기준으로 정렬한 후 첫째 줄부터 N개의 줄에 걸쳐 각 학생의 이름을 출력한다.
 
+# 개수 입력
 n = int(input())
 
 data = []
 
+# 학생 데이터 입력받기
 for _ in range(n):
     data.append(input().split())
 
+# 정해진 순서로 정렬
 data.sort(key=lambda x: (-int(x[1]), int(x[2]), -int(x[3]), x[0]))
 
+# 순서대로 출력
 for i in data:
     print(i[0])
