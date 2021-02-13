@@ -12,10 +12,15 @@ n = int(input())
 
 num = list(map(int, input().split()))
 
+# 이진탐색을 위한 초기화
 start = 0
-end = n
+end = n - 1
+
+# 고정점찾기 위한 초기화 없다면 -1로 그대로 유지
 result = -1
 
+
+# 이진탐색 시작
 while start <= end:
     select = (start + end) // 2
     if num[select] == select:

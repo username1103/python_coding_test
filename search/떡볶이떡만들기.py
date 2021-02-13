@@ -3,9 +3,12 @@
 
 import sys
 
+# 총 떡의 개수와 목표 target 입력받기
 n, target = map(int, input().split())
+# 떡들의 길이를 입력받음
 height = list(map(int, sys.stdin.readline().rstrip().split()))
 
+# 이진탐색을 위한 초기화
 start = 0
 end = max(height)
 
