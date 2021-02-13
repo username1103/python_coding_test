@@ -1,9 +1,14 @@
 # 26
 
 import sys
+
+# 값 입력받기
 x = int(input())
+
+# 메모제이션을 위한 list만들기
 d = [0] * 30001
 
+# 바텀업 방식.
 # for i in range(2, x + 1):
 #     d[i] = d[i - 1] + 1
 
