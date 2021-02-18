@@ -17,7 +17,7 @@ import heapq
 
 def find_parent(parent, x):
     if parent[x] != x:
-        parent[x] = find_parent(parent, parent[x])
+        parent[x] = find_parent(parent, parent[x])  # path compression 이용
         return parent[x]
     return x
 
@@ -34,7 +34,7 @@ def union(parent, x, y):
 n, m = map(int, input().split())
 
 q = []
-parent = [i for i in range(n + 1)]
+parent = [i for i in range(n + 1)]  # rank는 이용 x
 for i in range(m):
     a, b, cost = map(int, input().split())
     heapq.heappush(q, (cost, a, b))

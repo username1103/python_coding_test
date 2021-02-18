@@ -52,6 +52,7 @@ while q:
     v2_parent = find_parent(parent, v2)
 
     # 싸이클이 발생하지 않으면 트리에 포함 시킴
+    # 부모가 같다는 건 사이클이 발생했다는 것을 의미
     if v1_parent != v2_parent:
         union(parent, v1, v2)
         total_cost += cost

@@ -29,9 +29,10 @@ def union(parent, x, y):
 
 
 v, e = map(int, input().split())
-parent = [[0] * 2 for _ in range(v + 1)]
+parent = [[0] * 2 for _ in range(v + 1)]  # rank 관리를 위해 [0, 0] 으로 초기화
 
 
+# 자기 자신의 부모를 자기 자신으로 초기화 및 랭크 초기화
 for i in range(1,  v + 1):
     parent[i][0] = i
     # rank
