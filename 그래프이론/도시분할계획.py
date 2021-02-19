@@ -31,17 +31,21 @@ def union(parent, x, y):
         parent[x] = y
 
 
+# 집의 수와 길의 수
 n, m = map(int, input().split())
 
 q = []
 parent = [i for i in range(n + 1)]  # rank는 이용 x
+
+# 비용에 따른 오름차순 정렬을 위해 heapq 이용
 for i in range(m):
     a, b, cost = map(int, input().split())
     heapq.heappush(q, (cost, a, b))
 
-total = 0
-big = 0
+total = 0  # 총 비용
+big = 0  # 가장 비용이 큰 길
 
+# 크루스칼 알고리즘 수행
 while q:
     cost, a, b = heapq.heappop(q)
 
@@ -50,4 +54,5 @@ while q:
         total += cost
         big = cost
 
+# 전체 최소 스패닝 트리에서 비용이 가장 큰 길을 제거 하여 두 개의 마을로 분리
 print(total - big)

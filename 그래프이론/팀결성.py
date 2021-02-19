@@ -23,10 +23,13 @@ def union(x, y):
         parent[x] = y
 
 
+# 학생 수와 연산 수 입력받기
 n, m = map(int, input().split())
 
+# 부모 테이블 초기화
 parent = [i for i in range(n + 1)]
 
+# 주어진 연산에 따라 연산 수행
 for i in range(m):
     t, a, b = map(int, input().split())
     if t == 0:
