@@ -73,7 +73,7 @@ def move_all_shark(graph, direction, shark_pos, shark_moving_rule):
 
 time = 0  # 총 시간
 while True:
-    # 모든 상어들을 이동 시킴
+    # 모든 상어들을 다음 위치 얻어오기
     current_pos = move_all_shark(
         graph, direction, shark_pos, shark_moving_rule)
     # 상어의 값이 큰 상어부터 진행
