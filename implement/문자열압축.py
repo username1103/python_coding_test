@@ -33,13 +33,17 @@
 # 14
 # xababcdcdababcdcd
 # 17
-
-s = "xababcdcdababcdcd"
+# s = "aabbaccc"
+# s = "ababcdcdababcdcd"
+# s = "abcabcdede"
+# s = "abcabcabcabcdededededede"
+# s = "xababcdcdababcdcd"
+s = "ababab"
 
 
 def solution(s):
     answer = len(s)
-    split_num = 1
+    split_num = 1  # 쪼갤 갯수
 
     while split_num <= len(s)//2:
         val = len(s)
@@ -63,5 +67,43 @@ def solution(s):
 
     return answer
 
+
+def solution2(s):
+    # 결과 값 초기화
+    result = len(s)
+    # 경우 마다 결과를 담을 변수
+    result_string = ""
+    # 쪼갤 갯수(i)는 1 ~ len(s)//2 까지
+    for i in range(1, len(s)//2 + 1):
+        # 쪼갯을때 연속된 횟수
+        num = 1
+        # 쪼개는 개수 부터 진행 len(s)를 초과할 경우 탈출
+        for j in range(i, len(s), i):
+            # j이전 i개와 j부터 i개가 같다면 추가
+            if s[j-i:j] == s[j:j+i]:
+                num += 1
+            # 둘이 다르다면
+            else:
+                # 현재 반복된 횟수에 따른 결과 추가
+                if num == 1:
+                    result_string += s[j-i:j]
+                else:
+                    result_string += str(num) + s[j-i:j]
+                    num = 1
+
+        # 마지막 부분의 반복횟수에 따라 결과 추가
+        if num == 1:
+            result_string += s[j:]
+        else:
+            result_string += str(num) + s[j-i:j]
+
+        # 가장 작은 결과값으로 갱신
+        result = min(result, len(result_string))
+        result_string = ""
+
+    return result
+
+
+print(solution2(s))
 
 print(solution(s))
