@@ -4,15 +4,12 @@
 
 n = input()
 
-n = ''.join(sorted(n))
-
-total = 0
-index = 0
-for i in range(len(n)):
-    if n[i].isdigit():
-        total += int(n[i])
+num = 0
+string = ""
+for i in n:
+    if i.isdigit():
+        num += int(i)
     else:
-        index = i
-        break
+        string += i
 
-print(n[index:], total, sep="")
+print(''.join(sorted(string)), str(num))
