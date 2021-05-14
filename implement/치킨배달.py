@@ -64,39 +64,39 @@
 # 1 2 0 0 0
 
 # 11
-from itertools import combinations
+import itertools
 
 n, m = map(int, input().split())
 
-house = []
-chicken = []
+houses = []  # 집 목록
+chickens = []  # 치킨집 목록
 
-# 치킨집과 집에 위치 추가
 for i in range(n):
-    a = list(map(int, input().split()))
-    for j in range(len(a)):
-        if a[j] == 1:
-            house.append([i+1, j+1, 100])
-        elif a[j] == 2:
-            chicken.append([i+1, j+1])
+    temp = list(map(int, input().split()))
+    # 치킨과 집 목록 저장
+    for j in range(len(temp)):
+        if temp[j] == 2:
+            chickens.append((i, j))
+        elif temp[j] == 1:
+            houses.append((i, j))
 
-# 치킨집에서 m개의 치킨집만 선택하는 모든 경우를 얻어옴
-chooselists = list(combinations(chicken, m))
-min_value = 100 * len(house)
 
-# 해당 선택 리스트들 마다
-for chooselist in chooselists:
-    temp = 0
-    # 각 집들의 최소 치킨 거리 계산
-    for home in house:
-        home[2] = 100
-        for chick in chooselist:
-            home[2] = min(home[2], abs(home[0] - chick[0]) +
-                          abs(home[1] - chick[1]))
-        # 도시의 최소 치킨 거리 계산
-        temp += home[2]
+result = 50 * 50 * 100  # 최대치킨거리
 
-    # 더 작은값을 남김
-    min_value = min(min_value, temp)
+# 치킨 집들 중 m개만 뽑는 경우를 모두 계산
+remain_chickens = itertools.combinations(chickens, m)
+# 각각의 경우에서
+for chickens in remain_chickens:
+    d_total = 0  # 각각의 경우에서의 치킨 거리
+    for house in houses:
+        d_house = 50 + 50  # 한 집에서 갖게되는 최대 치킨 거리로 초기화
 
-print(min_value)
+        for chicken in chickens:
+            d_house = min(d_house, abs(
+                chicken[0] - house[0]) + abs(chicken[1] - house[1]))  # 가장 가까운 치킨집과의 거리를 구함
+
+        d_total += d_house  # 각 집들이 치킨집과 가지는 최소 거리를 추가
+
+    result = min(result, d_total)  # 가장 작은 치킨 거리 구하기
+
+print(result)
