@@ -62,78 +62,89 @@
 # 13 L
 from collections import deque
 
-# 방향 전환
 
-
-def turn(cd, dirction):
-    if dirction == 'D':
-        nd = (cd + 1) % 4
-    else:
-        nd = (cd + 3) % 4
+def rotateL(d):
+    nd = d - 1
+    if nd == -1:
+        return 3
     return nd
 
+
+def rotateR(d):
+    nd = d + 1
+    if nd == 4:
+        return 0
+    return nd
+
+
+# 방향 전환 0:북 1:동 2:남 3:서
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
 
 n = int(input())
 k = int(input())
 
-# 맵 초기화
-board = [[0]*n for _ in range(n)]
+# 맵
+m = [[0]*n for _ in range(n)]
 
-# 사과 위치 초기화
+# 사과 위치 정보 저장
 for _ in range(k):
-    row, col = map(int, input().split())
-    board[row - 1][col - 1] = 1
+    x, y = map(int, input().split())
+    m[x - 1][y - 1] = 1
 
-
-# 방향 전환 정보 입력받기
 l = int(input())
-# 방향 전환 정보를 priority queue에 담아 시간에 따라 오름차순 정렬
-direction = deque()
+
+# 방향 바꾸는 시간과 방향 저장
+cd = deque()
 for _ in range(l):
-    time, d = input().split()
-    direction.append((int(time), d))
+    x, c = input().split()
+    cd.append((int(x), c))
 
-# 북 동 남 서에 따른 각각 전진시 변화량
-dx = [0, 1, 0, -1]
-dy = [-1, 0, 1, 0]
-# 현재 방향
-cd = 1
-# 뱀의 위치를 q에 담음
-q = deque()
-q.append((0, 0))
 
-# 맵에 현재 위치 표시
-board[0][0] = 2
+result = 0  # 시간
+# 뱀
+snake = deque()
 
-# 시간
-time = 0
+# 초기화
+snake.append((0, 0))
+m[0][0] = 2
+snake_d = 1
+
 while True:
-    # 다음 위치 찾기
-    ny = q[-1][0] + dy[cd]
-    nx = q[-1][1] + dx[cd]
+    x, y = snake[-1]  # 머리 위치
+    nx = x + dx[snake_d]  # 다음 위치 정보
+    ny = y + dy[snake_d]
 
-    # 맵을 벗어나거나 자기 자신을 만난다면 죽음
-    if nx >= n or ny >= n or nx < 0 or ny < 0 or board[ny][nx] == 2:
-        time += 1
+    # 벽 확인
+    if nx < 0 or nx >= n or ny < 0 or ny >= n:
+        result += 1
         break
 
-    # 사과를 먹은게 아니라면 가장 오래된 뱀의 위치를 제거
-    if board[ny][nx] != 1:
-        loc = q.popleft()
-        board[loc[0]][loc[1]] = 0
+    # 자기 자신 확인
+    if m[nx][ny] == 2:
+        result += 1
+        break
 
-    # 뱀의 위치 추가
-    q.append((ny, nx))
-    board[ny][nx] = 2
+    # 뱀 한칸 증가
+    snake.append((nx, ny))
 
+    # 사과 체크
+    if m[nx][ny] != 1:
+        px, py = snake.popleft()
+        m[px][py] = 0
+
+    # 맵 표시
+    m[nx][ny] = 2
     # 시간 증가
-    time += 1
+    result += 1
 
-    # 시간이 방향전환정보에 데이터의 최근 정보와 일치한다면
-    if len(direction) != 0 and time == direction[0][0]:
-        # 해당 정보를 없애고
-        d = direction.popleft()[1]
-        # 방향전환
-        cd = turn(cd, d)
+    # 방향 바꾸는 시간이되면 방향 전환
+    if len(cd) != 0 and cd[0][0] == result:
+        _, c = cd.popleft()
+        if c == 'L':
+            snake_d = rotateL(snake_d)
+        else:
+            snake_d = rotateR(snake_d)
 
-print(time)
+
+print(result)
