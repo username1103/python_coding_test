@@ -46,77 +46,76 @@
 # 모든 학생들을 감시로부터 피하도록 할 수 있다면 "YES", 그렇지 않다면 "NO"를 출력한다.
 
 from itertools import combinations
+from collections import deque
 
-dx = [0, 1, 0, -1]
-dy = [-1, 0, 1, 0]
+# 방향에 따른 x, y 진행
+dx = [-1, 0, 1, 0]
+dy = [0, 1, 0, -1]
 
-
-def check(y, x, i):
-    while True:
-        ny = y + dy[i]
-        nx = x + dx[i]
-        if ny >= 0 and nx >= 0 and ny < n and nx < n:
-            if data[ny][nx] == 'X' or data[ny][nx] == 'T':
-                y = ny
-                x = nx
-                continue
-            elif data[ny][nx] == 'O':
-                break
-            else:
-                # 학생발견
-                return True
-        else:
-            break
-    # 학생 못발견
-    return False
-
-
-# 맵 사이즈
+# 복도 크기
 n = int(input())
 
-data = []
-empty = []
-teachers = []
 
-# 맵과 선생, 빈공간의 좌표 입력받기
+m = []  # 전체 지도
+nothings = []  # 빈 공간 좌표
+teachers = []  # 선생님 좌표
 for i in range(n):
     temp = input().split()
-    data.append(temp)
-    for j in range(n):
+    for j in range(len(temp)):
         if temp[j] == 'X':
-            empty.append((i, j))
+            nothings.append((i, j))
         elif temp[j] == "T":
             teachers.append((i, j))
+    m.append(temp)
 
-# 각 빈공간중 장애물을 3개 설치할 위치를 정하는 모든 경우 얻음
-emptyList = list(combinations(empty, 3))
+# 빈 공간에서 벽을 세울 곳 3곳 선정
+nothings_combinations = combinations(nothings, 3)
 
-result = "NO"
-# 각각의 모든 장애물 놓는 경우에 대해서
-for emptys in emptyList:
-    canlook = False  # 초기화
+result = True  # 결과 초기화
+for nothings_combination in nothings_combinations:
+    result = True  # 결과 초기화
 
-    # 장애물을 세움
-    for space in emptys:
-        data[space[0]][space[1]] = "O"
+    # 장애물 세움
+    for x, y in nothings_combination:
+        m[x][y] = 'O'
 
-    # 모든 선생들 좌표에대해서 탐색 시도
-    for teacher in teachers:
-        # 4가지 방향으로 탐색 시도
-        for i in range(4):
-            if check(teacher[0], teacher[1], i):
-                canlook = True  # 봤음
+    q = deque()
+    # 선생님들의 위치에서 4가지 진행 방향 추가
+    for x, y in teachers:
+        q.append((x, y, 0))
+        q.append((x, y, 1))
+        q.append((x, y, 2))
+        q.append((x, y, 3))
+
+    # 선생님 위치에서 전진하면서 확인
+    while q:
+        x, y, d = q.popleft()
+        nx = x + dx[d]
+        ny = y + dy[d]
+
+        # 다음 위치가 복도 안에 있고
+        if 0 <= nx < n and 0 <= ny < n:
+            # 학생을 발견한다면 실패
+            if m[nx][ny] == 'S':
+                result = False
                 break
-        if canlook == True:
-            break
 
-    # 학생을 발견하지 못했다면
-    if canlook == False:
-        result = "YES"
+            # 빈 공간이라면 다음 방향으로 전진하기 위해 큐에 추가
+            elif m[nx][ny] == "X":
+                q.append((nx, ny, d))
+
+            # 장애물을 만나면 추가하지 않음으로서 멈춤
+
+    # result = True라는 것은 학생들이 모두 잘 숨었다는 의미
+    if result:
         break
 
-    # 놨던 장애물 제거
-    for space in emptys:
-        data[space[0]][space[1]] = "X"
+    # 장애물 제거
+    for x, y in nothings_combination:
+        m[x][y] = 'X'
 
-print(result)
+# 결과 출력
+if result:
+    print("YES")
+else:
+    print("NO")
