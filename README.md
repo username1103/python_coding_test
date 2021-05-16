@@ -72,7 +72,7 @@ Pypy3를 지원한다면 1초에 2000만 번에서 1억 번 정도의 연산을 
 
 ### 정렬(Sorting)
 
-- [선택 정렬(Selection Sort)][https://github.com/username1103/python_coding_test/blob/master/sort/selection_sort.py] : 가장 작은 것을 선택해 정렬하는 방법. 속도가 느려 알고리즘 문제에 사용하기 적합하지 않다
+- [**선택 정렬(Selection Sort)**](https://github.com/username1103/python_coding_test/blob/master/sort/selection_sort.py) : 가장 작은 것을 선택해 정렬하는 방법. 속도가 느려 알고리즘 문제에 사용하기 적합하지 않다
 
   - 시간복잡도 O(N^2)
 
@@ -82,7 +82,7 @@ Pypy3를 지원한다면 1초에 2000만 번에서 1억 번 정도의 연산을 
   4. 두번째 데이터와 교환
   5. 반복...
 
-- [삽입 정렬(Insertion Sort)][https://github.com/username1103/python_coding_test/blob/master/sort/insertion_sort.py] : 특정한 데이터를 적절한 위치에 삽입한다는 의미로 해당 데이터 이전 까지는 이미 정렬되어 있다고 가정한다.
+- [**삽입 정렬(Insertion Sort)**](https://github.com/username1103/python_coding_test/blob/master/sort/insertion_sort.py) : 특정한 데이터를 적절한 위치에 삽입한다는 의미로 해당 데이터 이전 까지는 이미 정렬되어 있다고 가정한다.
   보통 비효율적이지만, 거의 정렬이 되어 있는 상황에서는 퀵 정렬 알고리즘보다 강력하다.
 
   - 시간복잡도 O(N^2)
@@ -92,7 +92,7 @@ Pypy3를 지원한다면 1초에 2000만 번에서 1억 번 정도의 연산을 
   3. 세번째 데이터는 ^ 1 ^ 2 ^ 총 세 자리중 적절한 위치에 삽입
   4. 반복...
 
-- [퀵 정렬(Quick Sort)][https://github.com/username1103/python_coding_test/blob/master/sort/quick_sort.py] : 기준을 설정하고 기준 데이터보다 큰 데이터와 작은 데이터의 위치를 교환한 후 리스트를 반으로 나누는 방식
+- [**퀵 정렬(Quick Sort)**](https://github.com/username1103/python_coding_test/blob/master/sort/quick_sort.py) : 기준을 설정하고 기준 데이터보다 큰 데이터와 작은 데이터의 위치를 교환한 후 리스트를 반으로 나누는 방식
 
   - 평균 시간복잡도 O(NlogN)이며, 최악의 경우(이미 데이터가 정렬되어 있는 경우) O(N^2)
 
@@ -102,7 +102,7 @@ Pypy3를 지원한다면 1초에 2000만 번에서 1억 번 정도의 연산을 
   4. 작은 데이터의 인덱스가 더 작다면 Pivot과 작은 데이터를 교환 후 Pivot을 기준으로 양 쪽으로 나누어 퀵 정렬 수행
   5. 작은 데이터의 인덱스가 더 크다면 작은 데이터와 큰 데이터를 교환 후 2번부터 다시 수행
 
-- [계수 정렬(Count Sort)][https://github.com/username1103/python_coding_test/blob/master/sort/count_sort.py] : 특정한 조건이 부합할 때만 사용할 수 있는 빠른 정렬 알고리즘이다. 예를 들어, 모든 데이터가 양수인 경우 최악의 경우에도 O(N + K) (N : 데이터의 개수, K : 데이터의 최댓값)을 보장한다. **데이터의 크기 범위가 제한적이고 정수 형태로 표현 가능할 때만 사용가능하다.** 일반적으로 가장 큰 데이터와 가장 작은 데이터의 차이가 **1,000,000**을 넘지 않을 때 효과적으로 사용가능하며 특히 데이터가 많이 중복되어 있을 때, 효과적이다. 예를 들어, 학생의 성적이 0 ~ 100 사이에 정수로 나타나는데, 만약 학생수가 매우 많다면 효과적이라고 할 수 있다. 그러나 만약 데이터가 0과 999,999만 있다면, 1,000,000크기의 리스트를 생성해야 함으로 비효율적이다.
+- [**계수 정렬(Count Sort)**](https://github.com/username1103/python_coding_test/blob/master/sort/count_sort.py) : 특정한 조건이 부합할 때만 사용할 수 있는 빠른 정렬 알고리즘이다. 예를 들어, 모든 데이터가 양수인 경우 최악의 경우에도 O(N + K) (N : 데이터의 개수, K : 데이터의 최댓값)을 보장한다. **데이터의 크기 범위가 제한적이고 정수 형태로 표현 가능할 때만 사용가능하다.** 일반적으로 가장 큰 데이터와 가장 작은 데이터의 차이가 **1,000,000**을 넘지 않을 때 효과적으로 사용가능하며 특히 데이터가 많이 중복되어 있을 때, 효과적이다. 예를 들어, 학생의 성적이 0 ~ 100 사이에 정수로 나타나는데, 만약 학생수가 매우 많다면 효과적이라고 할 수 있다. 그러나 만약 데이터가 0과 999,999만 있다면, 1,000,000크기의 리스트를 생성해야 함으로 비효율적이다.
 
   - 시간복잡도 O(N + K), 공간 복잡도 O(N + K)
 
