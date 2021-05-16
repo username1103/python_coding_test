@@ -49,7 +49,7 @@ Pypy3를 지원한다면 1초에 2000만 번에서 1억 번 정도의 연산을 
 
   - **인접 리스트(Adjacent List)** : 그래프를 연결된 정보만을 저장하기 때문에 효율적이지만 특정한 두 노드의 연결성을 확인하는데 인접 행렬보다 느리지만 특정 노드부터 인접한 모든 노드를 방문해야 하는 경우에는 효율적이다.
 
-#### DFS(깊이 우선 탐색) : <https://github.com/username1103/python_coding_test/blob/master/DFS_BFS/dfs.py>
+#### [DFS(깊이 우선 탐색)](https://github.com/username1103/python_coding_test/blob/master/DFS_BFS/dfs.py)
 
 그래프에서 깊은 부분을 우선적으로 탐색하는 알고리즘으로 모든 데이터를 탐색하는데 O(N)의 시간이 소요된다.
 
@@ -59,7 +59,7 @@ Pypy3를 지원한다면 1초에 2000만 번에서 1억 번 정도의 연산을 
 
 재귀함수를 이용할 경우 스택을 사용하지 않고 구현 가능하며 더 간결해진다. 그렇지만 컴퓨터 시스템의 동작 특성상 실제 프로그램의 수행 시간은 느려질 수 있다. 따라서 스택을 이용하여 수행 시간을 완화하는 방법도 필요하다.
 
-#### BFS(너비 우선 탐색) : <https://github.com/username1103/python_coding_test/blob/master/DFS_BFS/bfs.py>
+#### [BFS(너비 우선 탐색)](https://github.com/username1103/python_coding_test/blob/master/DFS_BFS/bfs.py)
 
 그래프에서 가까운 노드부터 탐색하는 알고리즘으로 DFS와 마찬가지로 모든 데이터를 탐색하는데 O(N)의 시간이 소요된다.
 하지만 일반적인 경우 실제 수행 시간은 DFS보다 좋은 편이다.
