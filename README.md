@@ -118,3 +118,12 @@ Pypy3를 지원한다면 1초에 2000만 번에서 1억 번 정도의 연산을 
     3. **더 빠른 정렬이 필요한 문제** : 퀵 정렬 기반의 정렬 기법이 아닌 계수 정렬이나 다른 정렬 알고리즘을 이용하거나 기존에 알려진 알고리즘의 구조적인 개선을 거쳐야 풀 수 있다.
 
 ---
+
+### 이진 탐색(Binary Search)
+
+- [**순차 탐색(Sequential Search)**](https://github.com/username1103/python_coding_test/blob/master/search/sequential_search.py) : 리스트 안에 있는 특정한 데이터를 찾기 위해 앞에서부터 데이터를 하나씩 차례대로 확인하는 방법.
+  count() 메소드를 이용할 경우, 순차 탐색이 이루어진다.
+
+- [**이진 탐색(Binary Search)**](https://github.com/username1103/python_coding_test/blob/master/search/binary_search.py) : 찾으려는 데이터와 중간점 위치에 있는 데이터를 비교함으로서 탐색하는 방법으로 **정렬되어 있는 데이터**에서만 사용 가능 하다. 단골로 나오는 문제이니 가급적이면 외우는 것이 좋다. **데이터의 탐색 범위가 2000만을 넘어갈 경우 이진 탐색을 고려해야 한다.**
+
+---
