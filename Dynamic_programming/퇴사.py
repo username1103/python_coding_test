@@ -35,56 +35,59 @@
 
 # 내 풀이
 
-# n = int(input())  # n일 입력받기
+import sys
+input = sys.stdin.readline
 
-# # 각각의 일자에 시간과 페이 그리고 완료 일자를 저장
-# data = []
-# for i in range(n):
-#     t, p = map(int, input().split())
-#     data.append((t, p, i + t))  # i + t 가 n보다 크면 기간초과
+n = int(input().rstrip())  # 날짜 입력 받기
 
-# d = [0] * n  # dp테이블 초기화 현재 날짜까지 낼 수 있는 최대이익
+data = []  # 상담 시간, 금액, 끝나는 날 입력 받음
+for i in range(n):
+    time, pay = map(int, input().rstrip().split())
+    endingDay = i + time - 1
+    data.append((time, pay, endingDay))
 
+d = [0] * n  # dp테이블 초기화
+max_value = 0  # 최대 금액
+for i in range(n):  # 날별로 체크
+    for j in range(len(data)):
+        time, pay, endingDay = data[j]
+        if endingDay == i:  # 해당하는 날에 끝나게 되는 상담이 있을 경우
+            # 최대 페이와 현재 날짜에 계산된 페이 비교
+            d[i] = max(d[i-time] + pay, max_value)
+            max_value = d[i]
+        else:
+            d[i] = max_value  # 일이 없을 경우
 
-# # dp테이블에 이전값과 해당 날짜에 종료되는 상담을 찾아 그 상담일자 전페이와 해당 상담페이를 더한 값들 중 가장 큰 값을 dp테이블에 갱신
-# for i in range(len(data)):
-#     temp = [d[i - 1]]
-#     for j in range(i + 1):
-#         if data[j][2] == i + 1:
-#             temp.append(d[i - data[j][0]] + data[j][1])
+print(max(d))
 
-#     d[i] = max(temp)
+# # 답지 풀이
 
-# print(d[n - 1])
+# n = int(input())
+# t = []
+# p = []
+# # i 번째 날부터 마지막 날까지 낼 수 있는 최대 이익, n + 1로 한 이유 : 마지막날을 0 으로 초기화 하기 위함
+# dp = [0] * (n + 1)
+# max_value = 0
 
-# 답지 풀이
-
-n = int(input())
-t = []
-p = []
-# i 번째 날부터 마지막 날까지 낼 수 있는 최대 이익, n + 1로 한 이유 : 마지막날을 0 으로 초기화 하기 위함
-dp = [0] * (n + 1)
-max_value = 0
-
-for _ in range(n):
-    x, y = map(int, input().split())
-    t.append(x)
-    p.append(y)
-
-
-for i in range(n-1, -1, -1):
-    time = t[i] + i  # 해당하는 날짜에 상담을 하게 될 경우 끝나게 되는 날짜
-
-    if time <= n:  # 날짜를 넘지 않는다면
-
-        # 지금까지 최대의 페이와 현재 날짜에 일하고 그이후 날짜부터 마지막까지 일 했을 때 얻을 수 있는 금액 중 큰 값을 dp테이블에 저장
-        dp[i] = max(p[i] + dp[time], max_value)
-        # max_value 갱신
-        max_value = dp[i]
-
-    # 상담기간이 기간을 벗어난다면 이전까지 상담한 페이중 최댓값으로 적용
-    else:
-        dp[i] = max_value
+# for _ in range(n):
+#     x, y = map(int, input().split())
+#     t.append(x)
+#     p.append(y)
 
 
-print(max_value)
+# for i in range(n-1, -1, -1):
+#     time = t[i] + i  # 해당하는 날짜에 상담을 하게 될 경우 끝나게 되는 날짜
+
+#     if time <= n:  # 날짜를 넘지 않는다면
+
+#         # 지금까지 최대의 페이와 현재 날짜에 일하고 그이후 날짜부터 마지막까지 일 했을 때 얻을 수 있는 금액 중 큰 값을 dp테이블에 저장
+#         dp[i] = max(p[i] + dp[time], max_value)
+#         # max_value 갱신
+#         max_value = dp[i]
+
+#     # 상담기간이 기간을 벗어난다면 이전까지 상담한 페이중 최댓값으로 적용
+#     else:
+#         dp[i] = max_value
+
+
+# print(max_value)
