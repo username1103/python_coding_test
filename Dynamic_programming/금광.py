@@ -22,11 +22,12 @@ for _ in range(t):
     for j in range(1, m):
         for i in range(n):
             temp = []
-            temp.append(d[i * m + (j - 1)])
+            temp.append(d[i * m + (j - 1)])  # 왼쪽 값 추가
             if i - 1 >= 0:
-                temp.append(d[(i - 1)*m + (j - 1)])
+                temp.append(d[(i - 1)*m + (j - 1)])  # 왼쪽 위 값 추가
             if i + 1 < n:
-                temp.append(d[(i + 1) * m + (j - 1)])
+                temp.append(d[(i + 1) * m + (j - 1)])  # 왼쪽 아래 값 추가
+            # 왼쪽, 왼쪽위, 왼쪽아래 값들 중 가장 큰값과 현재 위치의 값 더하여 갱신
             d[i * m + j] = max(temp) + cave[i * m + j]
 
     # 마지막열중 가장 큰값 으로 result 갱신
