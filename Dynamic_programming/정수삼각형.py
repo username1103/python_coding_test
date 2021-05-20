@@ -19,31 +19,22 @@
 # 첫째 줄에 합이 최대가 되는 경로에 있는 수의 합을 출력한다.
 
 
-n = int(input())  # 삼각형의 크기
+import sys
+input = sys.stdin.readline
 
-# 삼각형 입력 받기
-data = []
-for _ in range(n):
-    data.append(list(map(int, input().split())))
+n = int(input().rstrip())  # 삼각형 크기
+tri = [[] for _ in range(n)]  # 삼각형 모양 입력받기
+for i in range(n):
+    tri[i] = list(map(int, input().rstrip().split()))
 
-# dp 테이블 : 해당 값까지 왔을 때 최댓 값
-d = [[0] * i for i in range(1, n + 1)]
-d[0][0] = data[0][0]  # dp 테이블 초기화
+d = [[0]*i for i in range(1, n + 1)]  # dp테이블 초기화
+d[0][0] = tri[0][0]  # 첫 값 입력
 
-result = 0
+for i in range(1, n):
+    for j in range(len(tri[i])):
+        if j - 1 >= 0:  # 왼쪽 값이 있으면
+            d[i][j] = max(d[i-1][j-1] + tri[i][j], d[i][j])
+        if j != len(tri[i]) - 1:  # 끝 값이아니면
+            d[i][j] = max(d[i-1][j] + tri[i][j], d[i][j])
 
-# 해당 값이 처음 값인지 끝 값인지 중간 값인지 확인하여 최댓값을 설정
-for i in range(1, len(data)):
-    for j in range(len(data[i])):
-        if j == 0:
-            d[i][j] = d[i-1][j] + data[i][j]
-        elif j == len(data[i]) - 1:
-            d[i][j] = d[i-1][j-1] + data[i][j]
-        else:
-            d[i][j] = max(d[i-1][j] + data[i][j], d[i-1][j-1] + data[i][j])
-
-        # 마지막줄에 도달하면 result값을 최댓값으로 갱신
-        if i == len(data) - 1:
-            result = max(result, d[i][j])
-
-print(max(d[n-1]))
+print(max(d[-1]))
