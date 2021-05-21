@@ -14,9 +14,9 @@ for l in range(1, n):
         next2 = ugly[i2] * 2
     if ugly[l] == next3:
         i3 += 1
-        next3 = ugly[i3] * 2
+        next3 = ugly[i3] * 3
     if ugly[l] == next5:
         i5 += 1
-        next5 = ugly[i5] * 2
+        next5 = ugly[i5] * 5
 
 print(ugly[n - 1])
