@@ -31,6 +31,7 @@ d = [1] * n  # dp 테이블 i번째 까지 세울수 있는 최대 병사 수
 for i in range(1, n):
     for j in range(0, i):
         if solider[j] > solider[i]:
+            # 병사들을 세웠을 때, 현재 자신까지 세웠을 때 계산된 경우의 수와 해당병사까지 세우고 자신을 세우는 경우의 수 비교하여 큰값으로 갱신
             d[i] = max(d[i], d[j] + 1)
 
 print(n - max(d))
