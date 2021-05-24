@@ -23,7 +23,7 @@ start = int(input())
 graph = [[] for i in range(n + 1)]
 distance = [INF] * (n + 1)
 
-# a번 노드에서 c번 노드로 가는데 비용이 b이다.
+# a번 노드에서 b번 노드로 가는데 비용이 c만큼 든다.
 for _ in range(m):
     a, b, c = map(int, input().split())
     graph[a].append((b, c))
